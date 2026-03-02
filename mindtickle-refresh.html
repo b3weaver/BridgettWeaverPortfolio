@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mindtickle: Platform Design Refresh — Bridgett Weaver</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF4EE; --cream-dark: #F0E6DC; --ink: #1C0A1A;
+    --plum: #4C0043; --plum-mid: #7A1569;
+    --fuchsia: #C4006A; --fuchsia-bright: #E8007C;
+    --warm-gray: #8a7880; --border: #DDD0D8; --border-dark: #C4B0BC;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: 'DM Mono', monospace; font-size: 14px; line-height: 1.6; overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000; opacity: 0.35;
+  }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 24px 48px; background: rgba(250,244,238,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+  nav.scrolled { border-bottom-color: var(--border); }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; letter-spacing: -0.02em; color: var(--plum); text-decoration: none; }
+  .nav-back { color: var(--warm-gray); text-decoration: none; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+  .nav-back:hover { color: var(--plum); }
+  .nav-back::before { content: '←'; }
+
+  .cs-hero { padding: 160px 48px 80px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+  .cs-eyebrow { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fuchsia); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .cs-eyebrow::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--fuchsia); }
+  .cs-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(40px, 4.5vw, 68px); font-weight: 900; line-height: 1.0; letter-spacing: -0.03em; color: var(--ink); }
+  .cs-hero h1 em { font-style: italic; color: var(--fuchsia); }
+  .cs-hero-summary { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 300; line-height: 1.7; color: #5a3a50; margin-bottom: 40px; }
+  .cs-meta-row { display: flex; gap: 40px; padding-top: 32px; border-top: 1px solid var(--border-dark); flex-wrap: wrap; }
+  .cs-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .cs-meta-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); }
+  .cs-meta-value { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 300; color: var(--ink); }
+
+  .cs-divider { height: 4px; background: var(--plum); }
+
+  .cs-stat-bar { background: var(--plum); padding: 48px; display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; }
+  .cs-stat { text-align: center; }
+  .cs-stat-num { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; color: var(--cream); line-height: 1; }
+  .cs-stat-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,214,228,0.6); margin-top: 6px; }
+
+  .cs-body { max-width: 800px; margin: 0 auto; padding: 100px 48px; }
+  .cs-section { margin-bottom: 80px; }
+  .cs-section-label { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--fuchsia); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .cs-section-label::after { content: ''; display: block; flex: 1; height: 1px; background: var(--border-dark); }
+  .cs-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 3vw, 42px); font-weight: 900; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 24px; line-height: 1.1; }
+  .cs-section h2 em { font-style: italic; color: var(--fuchsia); }
+  .cs-section p { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; line-height: 1.8; color: #5a3a50; margin-bottom: 20px; }
+
+  .cs-callout { background: var(--cream-dark); border-left: 3px solid var(--fuchsia); padding: 28px 32px; margin: 40px 0; }
+  .cs-callout p { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 400; font-style: italic; color: var(--plum); line-height: 1.5; margin: 0; }
+
+  /* RACI */
+  .cs-raci { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border-dark); margin: 40px 0; }
+  .cs-raci-cell { background: var(--cream); padding: 24px; }
+  .cs-raci-cell.dark { background: var(--plum); }
+  .cs-raci-role { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 8px; }
+  .cs-raci-cell.dark .cs-raci-role { color: rgba(240,214,228,0.4); }
+  .cs-raci-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--plum); margin-bottom: 8px; }
+  .cs-raci-cell.dark .cs-raci-title { color: var(--cream); }
+  .cs-raci-names { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 300; color: #5a3a50; line-height: 1.6; }
+  .cs-raci-cell.dark .cs-raci-names { color: rgba(240,214,228,0.65); }
+
+  /* IA CHANGES */
+  .cs-ia-list { list-style: none; margin: 24px 0; }
+  .cs-ia-list li { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; color: #5a3a50; padding: 14px 0; border-bottom: 1px solid var(--border); display: flex; gap: 16px; align-items: flex-start; line-height: 1.5; }
+  .cs-ia-list li::before { content: '—'; color: var(--fuchsia); flex-shrink: 0; margin-top: 1px; }
+
+  /* TESTING */
+  .cs-testing { background: var(--cream-dark); padding: 40px; margin: 40px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .cs-testing-num { font-family: 'Playfair Display', serif; font-size: 64px; font-weight: 900; color: var(--plum); line-height: 1; }
+  .cs-testing h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 12px; margin-top: 8px; }
+  .cs-testing p { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 300; color: #5a3a50; line-height: 1.6; margin: 0; }
+  .cs-testing-results { display: flex; flex-direction: column; gap: 16px; justify-content: center; }
+  .cs-testing-result { display: flex; flex-direction: column; gap: 4px; }
+  .cs-testing-result-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm-gray); }
+  .cs-testing-result-bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .cs-testing-result-bar-fill { height: 100%; background: var(--fuchsia); border-radius: 3px; }
+
+  .cs-outcomes { list-style: none; margin: 24px 0; }
+  .cs-outcomes li { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300; color: #5a3a50; line-height: 1.6; padding: 16px 0; border-bottom: 1px solid var(--border); display: flex; gap: 16px; align-items: flex-start; }
+  .cs-outcomes li::before { content: '↗'; color: var(--fuchsia); font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+
+  .cs-next { background: var(--plum); padding: 80px 48px; display: flex; justify-content: space-between; align-items: center; }
+  .cs-next-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,214,228,0.5); margin-bottom: 12px; }
+  .cs-next h3 { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 900; color: var(--cream); letter-spacing: -0.02em; }
+  .cs-next h3 em { font-style: italic; color: var(--fuchsia-bright); }
+  .cs-next-arrow { font-size: 48px; color: var(--fuchsia-bright); text-decoration: none; transition: transform 0.3s; }
+  .cs-next-arrow:hover { transform: translateX(8px); }
+
+  footer { background: var(--ink); padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(240,214,228,0.35); }
+  footer a { color: rgba(240,214,228,0.35); text-decoration: none; }
+  footer a:hover { color: rgba(240,214,228,0.7); }
+
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .cs-hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 40px; }
+    .cs-body { padding: 60px 24px; }
+    .cs-raci { grid-template-columns: 1fr; }
+    .cs-testing { grid-template-columns: 1fr; }
+    .cs-stat-bar { gap: 40px; padding: 40px 24px; }
+    .cs-next { flex-direction: column; gap: 32px; padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">BW</a>
+  <a href="index.html#work" class="nav-back">All work</a>
+</nav>
+
+<div class="cs-hero fade-up">
+  <div>
+    <p class="cs-eyebrow">Mindtickle · Platform Redesign</p>
+    <h1>Platform-wide<br><em>design refresh</em></h1>
+  </div>
+  <div>
+    <p class="cs-hero-summary">After losing two of its largest clients to a dated, fragmented product, Mindtickle needed more than a visual refresh. It needed a unified language — across 8 product lines, 15 designers and 20 PMs. That's what content design built.</p>
+    <div class="cs-meta-row">
+      <div class="cs-meta-item">
+        <span class="cs-meta-label">Company</span>
+        <span class="cs-meta-value">Mindtickle</span>
+      </div>
+      <div class="cs-meta-item">
+        <span class="cs-meta-label">Role</span>
+        <span class="cs-meta-value">Content Design Lead</span>
+      </div>
+      <div class="cs-meta-item">
+        <span class="cs-meta-label">Team</span>
+        <span class="cs-meta-value">2 content designers</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-divider"></div>
+
+<div class="cs-stat-bar">
+  <div class="cs-stat">
+    <div class="cs-stat-num">8</div>
+    <div class="cs-stat-label">Product lines refreshed</div>
+  </div>
+  <div class="cs-stat">
+    <div class="cs-stat-num">~20</div>
+    <div class="cs-stat-label">PMs aligned</div>
+  </div>
+  <div class="cs-stat">
+    <div class="cs-stat-num">41</div>
+    <div class="cs-stat-label">Research participants</div>
+  </div>
+  <div class="cs-stat">
+    <div class="cs-stat-num">4</div>
+    <div class="cs-stat-label">Unified page templates</div>
+  </div>
+</div>
+
+<div class="cs-body">
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">The problem</div>
+    <h2>Fragmented product.<br><em>Fragmented trust.</em></h2>
+    <p>Mindtickle lost two of its largest enterprise clients in 2023. The product had grown fast — 8 product lines, each evolving independently — and the result was a platform that felt like several different applications stitched together. Navigation was inconsistent. Labels were inconsistent. The creation verbs alone had three different answers depending on which product you were in.</p>
+    <p>The platform refresh was the company's response. But for content design, this wasn't a styling pass. It was a chance to establish a unified voice and information architecture across the entire platform — for the first time.</p>
+    <div class="cs-callout">
+      <p>"Content design wasn't a downstream handoff here. It was embedded from day one."</p>
+    </div>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">The team</div>
+    <h2>Responsible, accountable,<br><em>informed.</em></h2>
+    <p>Cross-functional alignment at this scale doesn't happen by accident. I structured the engagement model explicitly so everyone understood their role in the content decisions.</p>
+
+    <div class="cs-raci">
+      <div class="cs-raci-cell dark">
+        <div class="cs-raci-role">Responsible</div>
+        <div class="cs-raci-title">Design & Content Design</div>
+        <div class="cs-raci-names">Bridgett Weaver · 2 Content Designers · 15 Product Designers</div>
+      </div>
+      <div class="cs-raci-cell">
+        <div class="cs-raci-role">Accountable</div>
+        <div class="cs-raci-title">Engineering & Product</div>
+        <div class="cs-raci-names">8 Engineering Teams · ~20 Product Managers</div>
+      </div>
+      <div class="cs-raci-cell">
+        <div class="cs-raci-role">Consulted</div>
+        <div class="cs-raci-title">Product Leadership</div>
+        <div class="cs-raci-names">Product Leaders across all lines</div>
+      </div>
+      <div class="cs-raci-cell">
+        <div class="cs-raci-role">Informed</div>
+        <div class="cs-raci-title">Company Leadership</div>
+        <div class="cs-raci-names">CEO · COO · CPO</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">The work</div>
+    <h2>IA overhaul.<br><em>From the ground up.</em></h2>
+    <p>Phase 1 content design work focused on the information architecture — the bones of the platform. Every navigation decision, every label, every header was reconsidered. Not for aesthetics, but for clarity.</p>
+
+    <ul class="cs-ia-list">
+      <li>Removed top navigation and moved everything to a collapsible left rail — reducing cognitive load and making product lines feel like one cohesive platform</li>
+      <li>Added header and subhead to every page — establishing consistent wayfinding that had been missing</li>
+      <li>Simplified all labels to their clearest form — "Digital Sales Rooms" became "Rooms," "All series" became "Series"</li>
+      <li>Removed important pages from the hidden "more" menu — surfacing content that was getting buried</li>
+      <li>Standardized the creation verb to "Add" across all products — eliminating "Create," "Build" and "New" as competing options</li>
+      <li>Created 4 unified page templates with consistent header, subhead, body copy and widget structure</li>
+      <li>Removed item counts from headers — they were causing load latency and weren't impactful</li>
+      <li>Removed tooltips hiding important information and surfaced that info in the design instead</li>
+    </ul>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">Validation</div>
+    <h2>We tested before<br><em>we shipped.</em></h2>
+    <p>Before launch, I ran a 41-person research study combining a survey and heatmap testing to validate the new IA. Respondents were asked to match menu icons to tasks, and to click where they'd expect to find key features in the redesigned interface.</p>
+
+    <div class="cs-testing">
+      <div>
+        <div class="cs-testing-num">41</div>
+        <h3>Research participants</h3>
+        <p>Survey + heatmap testing, run before Phase 1 shipped. Results directly shaped the final design decisions.</p>
+      </div>
+      <div class="cs-testing-results">
+        <div class="cs-testing-result">
+          <span class="cs-testing-result-label">Navigation to left rail — positive signal</span>
+          <div class="cs-testing-result-bar-track"><div class="cs-testing-result-bar-fill" style="width:88%"></div></div>
+        </div>
+        <div class="cs-testing-result">
+          <span class="cs-testing-result-label">Icons with text labels — strong preference</span>
+          <div class="cs-testing-result-bar-track"><div class="cs-testing-result-bar-fill" style="width:95%"></div></div>
+        </div>
+        <div class="cs-testing-result">
+          <span class="cs-testing-result-label">Analytics/Insights clarity — needed iteration</span>
+          <div class="cs-testing-result-bar-track"><div class="cs-testing-result-bar-fill" style="width:42%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <p>The testing surfaced real issues before they shipped. Icons without text labels confused users. The separation of Analytics from product-line Insights needed rethinking. Those findings became design decisions — adding labels to all icons, moving Settings back to the left rail and introducing Insights tabs within each product line connected to the overall Analytics page.</p>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">Outcomes</div>
+    <h2>One platform.<br><em>One language.</em></h2>
+    <ul class="cs-outcomes">
+      <li>All 8 product lines modernized with unified IA and content system</li>
+      <li>4 shared page templates established consistent structure across the platform</li>
+      <li>Single creation verb ("Add") adopted across every product line</li>
+      <li>41-person research study validated changes and shaped final decisions before launch</li>
+      <li>CEO, COO and CPO informed and aligned throughout</li>
+      <li>Content design embedded from day one, not as a downstream review</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="cs-next">
+  <div>
+    <div class="cs-next-label">Next case study</div>
+    <h3>Mindtickle: <em>eliminating copy debt</em></h3>
+  </div>
+  <a href="mindtickle-copy-debt.html" class="cs-next-arrow">→</a>
+</div>
+
+<footer>
+  <span>© 2026 Bridgett Weaver</span>
+  <a href="index.html">← Back to portfolio</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

@@ -353,7 +353,7 @@
     font-size: 22px; color: var(--fuchsia);
     opacity: 0; transition: opacity 0.3s, transform 0.3s;
   }
-  .project-item:hover .project-arrow { opacity: 1; transform: translateY(-50%) translateX(4px); }
+  [onclick].project-item:hover .project-arrow { opacity: 1; transform: translateY(-50%) translateX(4px); }
 
   /* Portfolio CTA */
   .portfolio-cta-wrap {
@@ -578,7 +578,7 @@
   </div>
   <div class="projects-list">
 
-    <div class="project-item fade-up">
+    <div class="project-item fade-up" onclick="window.location='walmart-ai-guidelines.html'" style="cursor:pointer;">
       <div class="project-num">01</div>
       <div class="project-content">
         <h3>Walmart: AI content guidelines & guardrails</h3>
@@ -623,7 +623,7 @@
       </div>
     </div>
 
-    <div class="project-item fade-up">
+    <div class="project-item fade-up" onclick="window.location='walmart-reorg.html'" style="cursor:pointer;">
       <div class="project-num">02</div>
       <div class="project-content">
         <h3>Walmart: leading content design through enterprise reorg</h3>
@@ -701,7 +701,7 @@
       </div>
     </div>
 
-    <div class="project-item fade-up">
+    <div class="project-item fade-up" onclick="window.location='mindtickle-refresh.html'" style="cursor:pointer;">
       <div class="project-num">04</div>
       <div class="project-content">
         <h3>Mindtickle: platform-wide design refresh</h3>
@@ -744,7 +744,7 @@
       </div>
     </div>
 
-    <div class="project-item fade-up">
+    <div class="project-item fade-up" onclick="window.location='mindtickle-copy-debt.html'" style="cursor:pointer;">
       <div class="project-num">05</div>
       <div class="project-content">
         <h3>Mindtickle: eliminating legacy copy debt at scale</h3>
@@ -876,7 +876,7 @@
       <p>I'm exploring UX leadership roles in organizations where content is key to design strategy and has a seat at the executive table. If that's you, I'd like to talk.</p>
     </div>
     <div class="contact-right fade-up">
-      <a href="mailto:b3weaver@gmail.com" class="contact-link">
+      <a href="/cdn-cgi/l/email-protection#f89acb8f9d998e9d8ab89f95999194d69b9795" class="contact-link">
         <span class="contact-link-label">Email me</span>
         <span class="contact-link-arrow">→</span>
       </a>
@@ -902,7 +902,7 @@
   <span>Built with intention</span>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav scroll border
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
@@ -910,9 +910,4 @@
 
   // Scroll fade-in
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-</script>
-</body>
-</html>
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.un
