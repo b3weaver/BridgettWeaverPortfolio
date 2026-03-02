@@ -350,9 +350,12 @@
 
   .project-arrow {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-    font-size: 22px; color: var(--fuchsia);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fuchsia); display: flex; align-items: center; gap: 8px;
     opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    white-space: nowrap;
   }
+  .project-arrow::after { content: '→'; font-size: 16px; }
   [onclick].project-item:hover .project-arrow { opacity: 1; transform: translateY(-50%) translateX(4px); }
 
   /* Portfolio CTA */
@@ -589,7 +592,7 @@
         <span class="project-type">AI Strategy</span>
         <span class="project-company">Walmart</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Framework deliverables</div>
@@ -634,7 +637,7 @@
         <span class="project-type">Enterprise Leadership</span>
         <span class="project-company">Walmart</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">The situation</div>
@@ -678,7 +681,7 @@
         <span class="project-type">Product & AI</span>
         <span class="project-company">Walmart</span>
       </div>
-      <span class="project-arrow">→</span>
+      
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">The problem</div>
@@ -712,7 +715,7 @@
         <span class="project-type">Platform Redesign</span>
         <span class="project-company">Mindtickle</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Scale</div>
@@ -755,7 +758,7 @@
         <span class="project-type">Content Systems</span>
         <span class="project-company">Mindtickle</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Strings reviewed</div>
@@ -787,7 +790,7 @@
         <span class="project-type">Practice Building</span>
         <span class="project-company">Mindtickle</span>
       </div>
-      <span class="project-arrow">→</span>
+      
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Starting point</div>
@@ -826,7 +829,7 @@
         <span class="project-type">Content Strategy</span>
         <span class="project-company">Humana</span>
       </div>
-      <span class="project-arrow">→</span>
+      
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Traffic impact — month one</div>
