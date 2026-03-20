@@ -430,22 +430,22 @@
   }
 
   /* ANIMATIONS */
-  .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; animation: fade-fallback 0s 1.5s forwards; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); animation: none; }
-  @keyframes fade-fallback { to { opacity: 1; transform: none; } }
-  @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; animation: none; } }
+  .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  /* Fallback: show content if JS hasn't run after 1s */
+  @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; } }
 
-  .hero-left > * { animation: hero-in 0.8s ease both; }
+  .hero-left > * { opacity: 0; transform: translateY(28px); animation: hero-in 0.8s ease forwards; }
   .hero-left .hero-tag { animation-delay: 0.15s; }
   .hero-left .hero-headline { animation-delay: 0.35s; }
   .hero-left .hero-sub { animation-delay: 0.55s; }
   .hero-left .hero-cta { animation-delay: 0.75s; }
 
-  .hero-right > * { animation: hero-in 1s ease both; }
+  .hero-right > * { opacity: 0; animation: hero-in 1s ease forwards; }
   .hero-right .hero-big-word { animation-delay: 0.5s; }
   .hero-right .hero-stats { animation-delay: 0.7s; }
 
-  @keyframes hero-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes hero-in { to { opacity: 1; transform: translateY(0); } }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
@@ -952,16 +952,11 @@
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Scroll fade-in — wrapped in try/catch so duplicate declaration never breaks the page
-  try {
-    if (typeof window.__obsInit === 'undefined') {
-      window.__obsInit = true;
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-      }, { threshold: 0.12 });
-      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-    }
-  } catch(e) {}
+  // Scroll fade-in
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
