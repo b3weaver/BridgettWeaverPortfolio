@@ -4,7 +4,973 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bridgett Weaver — UX Content Design Leader</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,w<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bridgett Weaver — UX Content Design Leader</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:      #FAF4EE;
+    --cream-dark: #F0E6DC;
+    --ink:        #1C0A1A;
+    --plum:       #4C0043;
+    --plum-mid:   #7A1569;
+    --fuchsia:    #C4006A;
+    --fuchsia-bright: #E8007C;
+    --warm-gray:  #8a7880;
+    --border:     #DDD0D8;
+    --border-dark:#C4B0BC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* Subtle texture */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000; opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 48px;
+    background: rgba(250,244,238,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-bottom-color: var(--border); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 900; letter-spacing: -0.02em;
+    color: var(--plum); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo-icon {
+    opacity: 0.45; display: flex; align-items: center;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    color: var(--warm-gray); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--plum); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+    background: var(--cream);
+  }
+
+  /* Large decorative plum block on right */
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 48%; height: 100%;
+    background: var(--plum);
+    z-index: 0;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 60px 80px 48px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-tag {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--fuchsia); margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--fuchsia); }
+
+  .hero-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 6vw, 96px);
+    font-weight: 900; line-height: 0.93; letter-spacing: -0.03em;
+    color: var(--ink); margin-bottom: 36px;
+  }
+  .hero-headline em { font-style: italic; color: var(--fuchsia); }
+
+  .hero-sub {
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 300; line-height: 1.7;
+    color: var(--warm-gray); max-width: 400px; margin-bottom: 52px;
+  }
+
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 14px;
+    background: var(--fuchsia); color: #fff;
+    padding: 16px 32px; text-decoration: none;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    transition: background 0.2s, gap 0.3s;
+  }
+  .hero-cta::after { content: '→'; font-size: 16px; }
+  .hero-cta:hover { background: var(--fuchsia-bright); gap: 22px; }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 0 48px 80px 60px;
+  }
+
+  .hero-big-word {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 10vw, 160px);
+    font-weight: 900; font-style: italic;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(244,180,220,0.35);
+    line-height: 1; letter-spacing: -0.04em;
+    user-select: none; margin-bottom: 60px;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px; font-weight: 900; line-height: 1;
+    color: var(--cream);
+  }
+  .stat-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(240,214,228,0.6); margin-top: 4px;
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden; padding: 16px 0;
+    background: var(--fuchsia);
+    border-top: none; border-bottom: none;
+  }
+  .marquee-track {
+    display: flex; animation: marquee 24s linear infinite;
+    white-space: nowrap; width: max-content;
+  }
+  .marquee-item {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-style: italic; color: #fff;
+    padding: 0 44px; letter-spacing: 0.04em; opacity: 0.92;
+  }
+  .marquee-item::after { content: '✦'; margin-left: 44px; font-style: normal; font-size: 9px; opacity: 0.5; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTIONS */
+  section { padding: 120px 48px; }
+
+  .section-label {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--fuchsia); margin-bottom: 48px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; display: block; flex: 1; height: 1px; background: var(--border-dark); }
+
+  /* ABOUT */
+  #about { background: var(--cream); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 2fr;
+    gap: 80px; max-width: 1200px; margin: 0 auto; align-items: start;
+  }
+
+  .about-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 4.5vw, 68px); font-weight: 900;
+    line-height: 1.0; letter-spacing: -0.03em; color: var(--ink);
+  }
+  .about-left h2 em { font-style: italic; color: var(--fuchsia); display: block; }
+
+  .about-right { padding-top: 8px; }
+  .about-body {
+    font-family: 'Fraunces', serif;
+    font-size: 19px; font-weight: 300; line-height: 1.75;
+    color: var(--ink); margin-bottom: 28px;
+  }
+  .about-body strong { font-weight: 700; color: var(--plum); }
+
+  .about-note {
+    font-size: 16px; color: var(--warm-gray); line-height: 1.7;
+    border-left: 3px solid var(--fuchsia); padding-left: 20px;
+    margin-bottom: 48px; font-style: italic; font-family: 'Fraunces', serif;
+  }
+
+  .skills-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+  .skill-tag {
+    border: 1px solid var(--border-dark); padding: 8px 18px;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--warm-gray); transition: all 0.2s; background: transparent;
+  }
+  .skill-tag:hover { border-color: var(--fuchsia); color: var(--fuchsia); background: rgba(196,0,106,0.04); }
+
+  .companies-row { margin-top: 48px; padding-top: 40px; border-top: 1px solid var(--border); }
+  .companies-label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 20px; }
+  .companies-list { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
+  .company-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900; font-style: italic;
+    color: var(--border-dark); transition: color 0.3s; letter-spacing: -0.02em;
+  }
+  .company-name:hover { color: var(--plum-mid); }
+
+  /* WORK */
+  #work { background: var(--cream-dark); }
+  #work .section-label { color: var(--plum); }
+  #work .section-label::after { background: var(--border-dark); }
+
+  .work-header { max-width: 1200px; margin: 0 auto 80px; }
+  .work-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 5.5vw, 84px); font-weight: 900;
+    line-height: 0.95; letter-spacing: -0.03em; color: var(--ink);
+  }
+  .work-header h2 em { font-style: italic; color: var(--plum); }
+
+  .projects-list { max-width: 1200px; margin: 0 auto; }
+
+  .project-item {
+    display: grid; grid-template-columns: 80px 1fr 200px;
+    gap: 40px 40px; align-items: start;
+    padding: 48px 0; border-top: 1px solid var(--border-dark);
+    position: relative; transition: padding-left 0.4s ease; cursor: pointer;
+  }
+  .project-item:last-of-type { border-bottom: 1px solid var(--border-dark); }
+  .project-item:hover { padding-left: 16px; }
+
+  /* Project visual strip */
+  .project-visual {
+    grid-column: 2 / 4;
+    display: flex; gap: 12px; min-width: 0;
+  }
+  .project-visual-card {
+    flex: 1; min-width: 0;
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    border-radius: 2px;
+  }
+  .project-visual-card.dark {
+    background: var(--plum);
+    border-color: var(--plum);
+    color: var(--cream);
+  }
+  .project-visual-card.mid {
+    background: #f5e6f0;
+    border-color: var(--border-dark);
+  }
+  .pvc-label {
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--warm-gray); margin-bottom: 8px; font-family: 'DM Mono', monospace;
+  }
+  .project-visual-card.dark .pvc-label { color: rgba(244,214,228,0.5); }
+  .pvc-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 900; color: var(--plum); line-height: 1;
+  }
+  .project-visual-card.dark .pvc-value { color: var(--cream); }
+  .pvc-sub {
+    font-family: 'Fraunces', serif; font-size: 13px; font-weight: 300;
+    color: var(--warm-gray); margin-top: 4px; line-height: 1.4;
+  }
+  .project-visual-card.dark .pvc-sub { color: rgba(244,214,228,0.65); }
+  .pvc-bar-row { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+  .pvc-bar-item { display: flex; flex-direction: column; gap: 3px; }
+  .pvc-bar-label { font-size: 10px; color: var(--warm-gray); font-family: 'DM Mono', monospace; }
+  .pvc-bar-track { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .pvc-bar-fill { height: 100%; background: var(--fuchsia); border-radius: 2px; }
+  .pvc-tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pvc-tag {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid var(--border-dark); padding: 4px 10px; color: var(--plum);
+    font-family: 'DM Mono', monospace; background: white;
+  }
+  .pvc-timeline { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .pvc-timeline-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-family: 'DM Mono', monospace; font-size: 10px; color: #5a3a50;
+  }
+  .pvc-timeline-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--fuchsia); flex-shrink: 0; margin-top: 2px;
+  }
+  .pvc-pill-row { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+  .pvc-pill {
+    background: var(--fuchsia); color: white; font-size: 10px; letter-spacing: 0.08em;
+    padding: 5px 12px; font-family: 'DM Mono', monospace; display: inline-block; width: fit-content;
+  }
+  .pvc-pill.outline {
+    background: transparent; border: 1px solid rgba(244,214,228,0.4); color: var(--cream);
+  }
+
+  .project-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; font-weight: 900; font-style: italic;
+    color: var(--border-dark); line-height: 1; transition: color 0.3s;
+  }
+  .project-item:hover .project-num { color: var(--fuchsia); }
+
+  .project-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+    color: var(--ink); margin-bottom: 12px; line-height: 1.2;
+  }
+  .project-content p {
+    font-family: 'Fraunces', serif;
+    font-size: 16px; font-weight: 300; line-height: 1.65;
+    color: #5a3a50; max-width: 520px;
+  }
+  .project-outcome {
+    display: inline-block; margin-top: 16px;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--plum); font-family: 'DM Mono', monospace;
+  }
+
+  .project-meta { text-align: right; padding-top: 4px; }
+  .project-type {
+    display: inline-block; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--plum); border: 1px solid var(--plum); padding: 6px 14px; margin-bottom: 10px;
+  }
+  .project-company {
+    display: block; font-size: 13px; color: var(--warm-gray);
+    font-style: italic; font-family: 'Fraunces', serif; margin-bottom: 4px;
+  }
+
+  .project-arrow {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fuchsia); display: flex; align-items: center; gap: 8px;
+    opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    white-space: nowrap;
+  }
+  .project-arrow::after { content: '→'; font-size: 16px; }
+  [onclick].project-item:hover .project-arrow { opacity: 1; transform: translateY(-50%) translateX(4px); }
+
+  /* Portfolio CTA */
+  .portfolio-cta-wrap {
+    max-width: 1200px; margin: 64px auto 0;
+    padding-top: 48px; border-top: 1px solid var(--border-dark);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .portfolio-cta-text {
+    font-family: 'Fraunces', serif; font-size: 20px; font-weight: 300; color: #5a3a50;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: var(--plum); color: #fff;
+    padding: 16px 32px; text-decoration: none;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: background 0.2s, gap 0.3s;
+  }
+  .btn-primary::after { content: '→'; font-size: 16px; }
+  .btn-primary:hover { background: var(--plum-mid); gap: 20px; }
+
+  /* CONTACT */
+  #contact { background: var(--plum); }
+  #contact .section-label { color: rgba(244,180,220,0.7); }
+  #contact .section-label::after { background: rgba(255,255,255,0.12); }
+
+  .contact-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;
+  }
+
+  .contact-left h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 5vw, 80px); font-weight: 900;
+    line-height: 0.92; letter-spacing: -0.04em; margin-bottom: 32px;
+    color: var(--cream);
+  }
+  .contact-left h2 em { font-style: italic; color: var(--fuchsia-bright); }
+  .contact-left p {
+    font-family: 'Fraunces', serif; font-size: 18px; font-weight: 300;
+    line-height: 1.7; color: rgba(240,214,228,0.75); max-width: 380px;
+  }
+
+  .contact-right { display: flex; flex-direction: column; }
+
+  .contact-link {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.12);
+    text-decoration: none; color: var(--cream); transition: color 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .contact-link::before {
+    content: ''; position: absolute; left: -100%; top: 0; bottom: 0;
+    width: 100%; background: var(--fuchsia); opacity: 0.15; transition: left 0.4s ease;
+  }
+  .contact-link:hover { color: #fff; }
+  .contact-link:hover::before { left: 0; }
+  .contact-link-label { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; }
+  .contact-link-arrow { font-size: 18px; transition: transform 0.3s; opacity: 0.6; }
+  .contact-link:hover .contact-link-arrow { transform: translateX(6px); opacity: 1; }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(240,214,228,0.35);
+  }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; animation: fade-fallback 0s 1.5s forwards; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); animation: none; }
+  @keyframes fade-fallback { to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; animation: none; } }
+
+  .hero-left > * { animation: hero-in 0.8s ease both; }
+  .hero-left .hero-tag { animation-delay: 0.15s; }
+  .hero-left .hero-headline { animation-delay: 0.35s; }
+  .hero-left .hero-sub { animation-delay: 0.55s; }
+  .hero-left .hero-cta { animation-delay: 0.75s; }
+
+  .hero-right > * { animation: hero-in 1s ease both; }
+  .hero-right .hero-big-word { animation-delay: 0.5s; }
+  .hero-right .hero-stats { animation-delay: 0.7s; }
+
+  @keyframes hero-in { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero::after { display: none; }
+    .hero-left { padding: 120px 24px 60px; }
+    .hero-right { background: var(--plum); padding: 48px 24px; }
+    .hero-right .hero-big-word { display: none; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
+    section { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .portfolio-cta-wrap { flex-direction: column; gap: 24px; align-items: flex-start; }
+    footer { flex-direction: column; gap: 10px; text-align: center; }
+
+    /* Project items — stack fully on mobile */
+    .project-item {
+      display: flex; flex-direction: column; gap: 16px;
+      padding: 36px 0; position: relative;
+    }
+    .project-num { font-size: 36px; }
+    .project-meta { display: none; }
+    .project-content p { max-width: 100%; }
+
+    /* Arrow goes below content, not absolute */
+    .project-arrow {
+      position: static;
+      transform: none;
+      opacity: 0;
+      margin-top: 4px;
+      align-self: flex-start;
+    }
+    [onclick].project-item:hover .project-arrow {
+      opacity: 1;
+      transform: none;
+    }
+    /* On touch devices, always show the See case study link */
+    [onclick] .project-arrow {
+      opacity: 1;
+    }
+
+    /* Visual cards — stack vertically */
+    .project-visual {
+      flex-direction: column; gap: 10px;
+    }
+    .project-visual-card {
+      width: 100%; flex: none;
+    }
+    /* Simplify visual cards on mobile — just show label + value */
+    .pvc-bar-row { gap: 6px; }
+    .pvc-tag-row { gap: 4px; }
+    .pvc-timeline { gap: 4px; }
+    .pvc-pill-row { gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">BW<span class="nav-logo-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <p class="hero-tag">UX Content Design Leader</p>
+    <h1 class="hero-headline">Content as<br><em>design<br>advantage.</em></h1>
+    <p class="hero-sub">I build the organizations, systems and language that make complex products feel effortlessly human — backed by 14+ years of professional writing and a journalist's instinct for what actually matters.</p>
+    <a href="#work" class="hero-cta">See my impact</a>
+  </div>
+  <div class="hero-right">
+    <div class="hero-big-word">Design.</div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Years leading content teams</div>
+      </div>
+      <div>
+        <div class="stat-num">14+</div>
+        <div class="stat-label">Years professional writing</div>
+      </div>
+      <div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">Orgs shaped from the inside</div>
+      </div>
+      <div>
+        <div class="stat-num">F1</div>
+        <div class="stat-label">Fortune 1 experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Content Strategy</span>
+    <span class="marquee-item">UX Writing</span>
+    <span class="marquee-item">Team Leadership</span>
+    <span class="marquee-item">Design Systems</span>
+    <span class="marquee-item">AI-Responsible Design</span>
+    <span class="marquee-item">Voice & Tone</span>
+    <span class="marquee-item">Enterprise Products</span>
+    <span class="marquee-item">Content Governance</span>
+    <span class="marquee-item">Content Strategy</span>
+    <span class="marquee-item">UX Writing</span>
+    <span class="marquee-item">Team Leadership</span>
+    <span class="marquee-item">Design Systems</span>
+    <span class="marquee-item">AI-Responsible Design</span>
+    <span class="marquee-item">Voice & Tone</span>
+    <span class="marquee-item">Enterprise Products</span>
+    <span class="marquee-item">Content Governance</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left fade-up">
+      <div class="section-label">About</div>
+      <h2>I speak<br>both<br><em>languages.</em></h2>
+      <p style="font-family:'Fraunces',serif; font-size:15px; font-weight:300; color:var(--warm-gray); margin-top:16px; line-height:1.6;">Writing & design.</p>
+    </div>
+    <div class="about-right fade-up">
+      <p class="about-body">
+        I'm a UX Content Design Leader in Walmart's Global Design Org — managing a team of content designers, building careers and shaping how the discipline shows up across one of the most complex product ecosystems in the world. Before Walmart, I built the content design practice from scratch at Mindtickle, a sales enablement SaaS platform, and managed content strategy and UX writing for Humana's Go365 wellness platform.
+      </p>
+      <p class="about-body">
+        My background is in writing — 14+ years of it, starting in business and technology journalism. That's where I learned that clarity isn't a nice-to-have; it's the whole point. I brought that conviction into design, and it shapes how I lead: I build teams that write with intention, design with empathy and push back when the work isn't good enough.
+      </p>
+      <p class="about-body">
+        I believe great content design leadership means three things: <strong>building the org structure that sets designers up to do their best work</strong>, <strong>establishing the systems and standards that outlast any individual</strong>, and <strong>earning the kind of cross-functional trust that gets content into the room before decisions are made</strong> — not after.
+      </p>
+      <p class="about-note">
+        "Great design leadership isn't about overseeing every word written or pixel designed; it's about architecting the systems that make excellence the default, not an accident."
+      </p>
+      <div class="skills-row">
+        <span class="skill-tag">Content Design Org Building</span>
+        <span class="skill-tag">Team Leadership</span>
+        <span class="skill-tag">Content Strategy</span>
+        <span class="skill-tag">UX Writing</span>
+        <span class="skill-tag">Voice, Tone & Style</span>
+        <span class="skill-tag">Info Architecture</span>
+        <span class="skill-tag">AI Content Design</span>
+        <span class="skill-tag">Design Systems</span>
+        <span class="skill-tag">Microcopy</span>
+        <span class="skill-tag">Figma</span>
+        <span class="skill-tag">Jira</span>
+        <span class="skill-tag">Confluence</span>
+      </div>
+      <div class="companies-row">
+        <p class="companies-label">Experience at</p>
+        <div class="companies-list">
+          <span class="company-name">Walmart</span>
+          <span class="company-name">Mindtickle</span>
+          <span class="company-name">Humana</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="work-header fade-up">
+    <div class="section-label">Selected Work</div>
+    <h2>Leadership that<br><em>leaves a mark.</em></h2>
+  </div>
+  <div class="projects-list">
+
+    <div class="project-item fade-up" onclick="window.location='walmart-ai-guidelines.html'" style="cursor:pointer;">
+      <div class="project-num">01</div>
+      <div class="project-content">
+        <h3>Walmart: AI content guidelines & guardrails</h3>
+        <p>As AI-powered features moved from experiments to shipped products across Walmart's platform, I stepped in before the org shipped inconsistent, untrusted content at scale. I built a full AI content framework: a design decision deck guiding teams on whether and how AI should speak, a taxonomy of every AI product in production mapped to voice and interaction patterns, and writing guidelines to train AI to communicate in Walmart's voice — even when it generates the words itself.</p>
+        <span class="project-outcome">↗ AI content standards adopted org-wide · Reduced inconsistency across customer and associate-facing products</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">AI Strategy</span>
+        <span class="project-company">Walmart</span>
+      </div>
+      <span class="project-arrow">See case study</span>
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">Framework deliverables</div>
+          <div class="pvc-pill-row">
+            <span class="pvc-pill">AI Design Decision Deck</span>
+            <span class="pvc-pill outline">AI Product Taxonomy</span>
+            <span class="pvc-pill outline">Writing Guidelines for AI Training</span>
+          </div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">Coverage</div>
+          <div class="pvc-bar-row">
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">Customer-facing AI</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:100%"></div></div>
+            </div>
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">Associate-facing AI</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:100%"></div></div>
+            </div>
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">Partner / seller AI</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:85%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">Key question answered</div>
+          <div class="pvc-value" style="font-size:16px; margin-top:8px; color:var(--plum); font-family:'Fraunces',serif; font-weight:300; line-height:1.5;">"Does this AI need a personality — and if so, what should it sound like?"</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item fade-up" onclick="window.location='walmart-reorg.html'" style="cursor:pointer;">
+      <div class="project-num">02</div>
+      <div class="project-content">
+        <h3>Walmart: leading content design through enterprise reorg</h3>
+        <p>Within my first two months at Walmart, a return-to-office mandate triggered significant attrition. Then a senior manager departed, our director exited, and a new EVP instituted a hiring freeze while preparing a large-scale UX reorganization. Content design was operating at roughly 50% staffing. Work volume did not slow down. I became the only remaining content design leader — and the priority was not speed. It was stability, clarity and trust. I ran three parallel tracks: stabilizing the team through transparency and psychological safety, resetting the operating model from reactive support to leader-aligned partnership, and institutionalizing the discipline by authoring a Content Design Playbook that defined engagement, governance and AI standards. The team held its cohesion. When the reorg resolved into decentralized vertical teams, content design entered the new structure with clarity and a shared identity.</p>
+        <span class="project-outcome">↗ Team stabilized at 50% staffing · Operating model redefined · Content Design Playbook established · Practice positioned for long-term scale</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">Enterprise Leadership</span>
+        <span class="project-company">Walmart</span>
+      </div>
+      <span class="project-arrow">See case study</span>
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">The situation</div>
+          <div class="pvc-timeline">
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>RTO mandate → team attrition</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Senior manager departed</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Director exited</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>New EVP + hiring freeze</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>~50% staffing. Full workload.</div>
+          </div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">Three leadership tracks</div>
+          <div class="pvc-bar-row" style="gap:12px; margin-top:10px;">
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:var(--plum);">01 — Stabilize the team</div>
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:var(--plum);">02 — Reset the operating model</div>
+            <div style="font-family:'DM Mono',monospace; font-size:11px; color:var(--plum);">03 — Institutionalize the practice</div>
+          </div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">What was built</div>
+          <div class="pvc-tag-row">
+            <span class="pvc-tag">Content Design Playbook</span>
+            <span class="pvc-tag">Engagement Model</span>
+            <span class="pvc-tag">AI Governance</span>
+            <span class="pvc-tag">Critique Rituals</span>
+            <span class="pvc-tag">Hiring Roadmap</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item fade-up">
+      <div class="project-num">03</div>
+      <div class="project-content">
+        <h3>Walmart: AI-powered supplier onboarding sprint</h3>
+        <p>Supplier onboarding at Walmart took an average of 6 months — too slow for the business and too painful for suppliers. I led content design in a month-long innovation sprint to redesign the experience using AI. We built a flow where AI scanned company data to surface relevant onboarding steps, reducing friction at every stage. The result: a faster path to first sale and a product that felt like it was working with suppliers, not against them.</p>
+        <span class="project-outcome">↗ Redesigned onboarding flow targeting significant reduction in supplier time-to-first-sale</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">Product & AI</span>
+        <span class="project-company">Walmart</span>
+      </div>
+      
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">The problem</div>
+          <div class="pvc-value">6 mo.</div>
+          <div class="pvc-sub">Average supplier onboarding time before the sprint</div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">Sprint approach</div>
+          <div class="pvc-timeline">
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>AI scans supplier company data</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Surfaces relevant onboarding steps</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Guides to first proposal submission</div>
+          </div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">Sprint duration</div>
+          <div class="pvc-value">1 mo.</div>
+          <div class="pvc-sub">From brief to shipped prototype</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item fade-up" onclick="window.location='mindtickle-refresh.html'" style="cursor:pointer;">
+      <div class="project-num">04</div>
+      <div class="project-content">
+        <h3>Mindtickle: platform-wide design refresh</h3>
+        <p>Mindtickle lost two of its largest clients in 2023 due to a dated, fragmented product. I led content design across an 8-product-line refresh — co-managing 2 content designers, partnering with 15 product designers and securing buy-in from ~20 PMs and 8 engineering teams, with the CEO, COO and CPO kept informed throughout. Content design wasn't a downstream handoff: I overhauled the IA from the ground up, moving top navigation to a collapsible left rail, simplifying all labels, standardizing creation verbs to a single "Add" across every product and creating 4 unified page templates. To validate the changes, I ran a 41-person study combining surveys and heatmap testing — then used those findings to make targeted fixes before launch.</p>
+        <span class="project-outcome">↗ All 8 product lines modernized · Unified IA and content system · Research-validated before shipping</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">Platform Redesign</span>
+        <span class="project-company">Mindtickle</span>
+      </div>
+      <span class="project-arrow">See case study</span>
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">Scale</div>
+          <div class="pvc-value">8</div>
+          <div class="pvc-sub">Product lines refreshed simultaneously</div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">Cross-functional reach</div>
+          <div class="pvc-bar-row">
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">~20 product managers</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:100%"></div></div>
+            </div>
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">15 product designers</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:75%"></div></div>
+            </div>
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">8 engineering teams</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:40%"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">Validated by</div>
+          <div class="pvc-value">41</div>
+          <div class="pvc-sub">Research participants — survey + heatmap testing</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item fade-up" onclick="window.location='mindtickle-copy-debt.html'" style="cursor:pointer;">
+      <div class="project-num">05</div>
+      <div class="project-content">
+        <h3>Mindtickle: eliminating legacy copy debt at scale</h3>
+        <p>Years of accumulated copy errors — grammar, spelling, punctuation, voice and tone — had gone unaddressed across Mindtickle's product. With a team of only 3 writers, I designed a two-pronged system to fix it. First, a PCI Kanban board in Jira with a 5-day SLA, automated progress emails and swimlane ownership — resolving 250 legacy issues in 6 months. Second, Whitepen: a string-by-string edit of every copy element in the product, run directly in GitLab. When leadership proposed using an AI scan alone (which flagged 1,500 changes), I pushed back, secured the resources for a full manual review and oversaw edits to 42,000 strings — resulting in 5,000 individual improvements.</p>
+        <span class="project-outcome">↗ 42,000 strings reviewed · 5,000 copy updates shipped · 250 legacy issues resolved in 6 months</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">Content Systems</span>
+        <span class="project-company">Mindtickle</span>
+      </div>
+      <span class="project-arrow">See case study</span>
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">Strings reviewed</div>
+          <div class="pvc-value">42K</div>
+          <div class="pvc-sub">Manual review over 3 months</div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">Two-pronged system</div>
+          <div class="pvc-timeline">
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>PCI Kanban · 5-day SLA · 250 issues fixed</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Whitepen · GitLab edits · 5,000 updates</div>
+          </div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">Leadership decision</div>
+          <div class="pvc-value" style="font-size:16px; font-family:'Fraunces',serif; font-weight:300; color:var(--plum); margin-top:8px; line-height:1.5;">Pushed back on AI-only scan. Secured resources for full manual review.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item fade-up">
+      <div class="project-num">06</div>
+      <div class="project-content">
+        <h3>Mindtickle: building a content design practice from nothing</h3>
+        <p>I joined Mindtickle as its first content designer. There was no practice, no process and no organizational understanding of what content design was. I introduced the discipline company-wide, secured buy-in from leadership, designers, researchers, product managers and engineers, hired and embedded UX writers across product teams and built a process-driven strategy that addressed the past, present and future of content design in the product. By the time I left, content design had a seat in every major product decision.</p>
+        <span class="project-outcome">↗ First content design practice at Mindtickle · Leadership buy-in secured · Writers embedded across all product teams</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">Practice Building</span>
+        <span class="project-company">Mindtickle</span>
+      </div>
+      
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">Starting point</div>
+          <div class="pvc-value">Zero</div>
+          <div class="pvc-sub">No practice, no process, no org understanding of content design</div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">What was established</div>
+          <div class="pvc-tag-row">
+            <span class="pvc-tag">Hired & embedded writers</span>
+            <span class="pvc-tag">Style standards</span>
+            <span class="pvc-tag">Leadership buy-in</span>
+            <span class="pvc-tag">Process model</span>
+            <span class="pvc-tag">6 product lines</span>
+          </div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">Stakeholders aligned</div>
+          <div class="pvc-timeline">
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>CEO, CPO, design leadership</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Product managers</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Engineers</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-item fade-up">
+      <div class="project-num">07</div>
+      <div class="project-content">
+        <h3>Humana Go365: content strategy across a flagship wellness platform</h3>
+        <p>Go365 is Humana's corporate wellness and rewards platform, serving over 1 million members. I managed content strategy and UX writing across two major initiatives: a full landing page redesign and a dashboard refresh. The landing page work required aligning four competing stakeholder groups simultaneously — business partners wanted a richer product story, sales needed a prospect-facing experience, the SEO team needed organic search improvements and UX had long flagged the existing pages as an embarrassment. I unified those demands into a single content strategy. When the redesigned pages launched, organic traffic more than doubled in the first month. New business pages saw 300–400% more traffic than the previous employer pages had averaged monthly. The dashboard refresh added whole-person wellness framing — including a new mood tracker, a personalized "next best step" tile addressing a top member pain point and contextual step-count milestones — all written to a consistent, warm voice across dozens of member scenarios.</p>
+        <span class="project-outcome">↗ Organic traffic doubled in month one · 300–400% traffic increase on new business pages · Whole-person wellness UX across 1M+ member platform</span>
+      </div>
+      <div class="project-meta">
+        <span class="project-type">Content Strategy</span>
+        <span class="project-company">Humana</span>
+      </div>
+      
+      <div class="project-visual">
+        <div class="project-visual-card dark">
+          <div class="pvc-label">Traffic impact — month one</div>
+          <div class="pvc-value">2×</div>
+          <div class="pvc-sub">Organic traffic to Go365 landing page doubled immediately after launch</div>
+        </div>
+        <div class="project-visual-card">
+          <div class="pvc-label">New business page performance</div>
+          <div class="pvc-bar-row">
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">Wellness program benefits page</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:100%"></div></div>
+            </div>
+            <div class="pvc-bar-item">
+              <span class="pvc-bar-label">How-to-use page</span>
+              <div class="pvc-bar-track"><div class="pvc-bar-fill" style="width:100%"></div></div>
+            </div>
+          </div>
+          <div style="margin-top:10px; font-family:'Playfair Display',serif; font-size:22px; font-weight:900; color:var(--plum);">300–400%</div>
+          <div class="pvc-sub">increase vs. previous monthly averages</div>
+        </div>
+        <div class="project-visual-card mid">
+          <div class="pvc-label">Stakeholders aligned</div>
+          <div class="pvc-timeline">
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Business — product story</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>Sales — prospect experience</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>SEO — organic search</div>
+            <div class="pvc-timeline-item"><div class="pvc-timeline-dot"></div>UX — member clarity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="portfolio-cta-wrap fade-up">
+    <p class="portfolio-cta-text">Want the full story? My portfolio deck goes deeper.</p>
+    <a href="https://www.canva.com/design/DAG_wsGk1FM/p_90rSAO2pxMmInjKkmTiA/view?utm_content=DAG_wsGk1FM&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h58f80655ec" target="_blank" class="btn-primary">View portfolio deck</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-left fade-up">
+      <div class="section-label">Contact</div>
+      <h2>Ready for my <em>next challenge.</em></h2>
+      <p>I'm exploring UX leadership roles in organizations where content is key to design strategy and has a seat at the executive table. If that's you, I'd like to talk.</p>
+    </div>
+    <div class="contact-right fade-up">
+      <a href="/cdn-cgi/l/email-protection#f89acb8f9d998e9d8ab89f95999194d69b9795" class="contact-link">
+        <span class="contact-link-label">Email me</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/bridgett-weaver-69135b6b/" target="_blank" class="contact-link">
+        <span class="contact-link-label">LinkedIn</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a href="https://docs.google.com/document/d/1cdADYSqNcQeemPjTNPbOGKT4A0r5MNUVlrGDgec4PVM/edit?usp=drivesdk" target="_blank" class="contact-link">
+        <span class="contact-link-label">Download résumé</span>
+        <span class="contact-link-arrow">↓</span>
+      </a>
+      <a href="https://www.canva.com/design/DAG_wsGk1FM/p_90rSAO2pxMmInjKkmTiA/view?utm_content=DAG_wsGk1FM&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h58f80655ec" target="_blank" class="contact-link">
+        <span class="contact-link-label">Portfolio deck</span>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Bridgett Weaver</span>
+  <span>UX Content Design Leader</span>
+  <span>Built with intention</span>
+</footer>
+
+<script>
+  // Nav scroll border
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Scroll fade-in — wrapped in try/catch so duplicate declaration never breaks the page
+  try {
+    if (typeof window.__obsInit === 'undefined') {
+      window.__obsInit = true;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    }
+  } catch(e) {}
+</script>
+</body>
+</html>ght@0,400;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
 <style>
   :root {
     --cream:      #FAF4EE;
