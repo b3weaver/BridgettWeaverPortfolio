@@ -7,7 +7,388 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
 <style>
   :root {
+    --cream:      #FAF4EE;<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walmart: AI Content Guidelines — Bridgett Weaver</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400;1,900&family=DM+Mono:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root {
     --cream:      #FAF4EE;
+    --cream-dark: #F0E6DC;
+    --ink:        #1C0A1A;
+    --plum:       #4C0043;
+    --plum-mid:   #7A1569;
+    --fuchsia:    #C4006A;
+    --fuchsia-bright: #E8007C;
+    --warm-gray:  #8a7880;
+    --border:     #DDD0D8;
+    --border-dark:#C4B0BC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream); color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px; line-height: 1.6; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9000; opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 24px 48px;
+    background: rgba(250,244,238,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent; transition: border-color 0.3s;
+  }
+  nav.scrolled { border-bottom-color: var(--border); }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 900; letter-spacing: -0.02em;
+    color: var(--plum); text-decoration: none;
+  }
+  .nav-back {
+    color: var(--warm-gray); text-decoration: none;
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.2s; display: flex; align-items: center; gap: 8px;
+  }
+  .nav-back:hover { color: var(--plum); }
+  .nav-back::before { content: '←'; }
+
+  /* CASE STUDY HERO */
+  .cs-hero {
+    padding: 160px 48px 80px;
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end;
+  }
+  .cs-eyebrow {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--fuchsia); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cs-eyebrow::before { content: ''; display: block; width: 28px; height: 1.5px; background: var(--fuchsia); }
+  .cs-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 4.5vw, 68px); font-weight: 900;
+    line-height: 1.0; letter-spacing: -0.03em; color: var(--ink);
+  }
+  .cs-hero h1 em { font-style: italic; color: var(--fuchsia); }
+  .cs-hero-meta { padding-bottom: 8px; }
+  .cs-hero-summary {
+    font-family: 'Fraunces', serif; font-size: 20px;
+    font-weight: 300; line-height: 1.7; color: #5a3a50; margin-bottom: 40px;
+  }
+  .cs-meta-row {
+    display: flex; gap: 40px; padding-top: 32px;
+    border-top: 1px solid var(--border-dark);
+  }
+  .cs-meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .cs-meta-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); }
+  .cs-meta-value { font-family: 'Fraunces', serif; font-size: 15px; font-weight: 300; color: var(--ink); }
+
+  /* DIVIDER */
+  .cs-divider {
+    height: 4px; background: var(--plum);
+    margin: 0; width: 100%;
+  }
+
+  /* STAT BAR */
+  .cs-stat-bar {
+    background: var(--plum); padding: 48px;
+    display: flex; justify-content: center; gap: 80px;
+  }
+  .cs-stat { text-align: center; }
+  .cs-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px; font-weight: 900; color: var(--cream); line-height: 1;
+  }
+  .cs-stat-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(240,214,228,0.6); margin-top: 6px;
+  }
+
+  /* BODY CONTENT */
+  .cs-body {
+    max-width: 800px; margin: 0 auto; padding: 100px 48px;
+  }
+  .cs-section { margin-bottom: 80px; }
+  .cs-section-label {
+    font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--fuchsia); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .cs-section-label::after { content: ''; display: block; flex: 1; height: 1px; background: var(--border-dark); }
+  .cs-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 42px); font-weight: 900;
+    letter-spacing: -0.02em; color: var(--ink); margin-bottom: 24px; line-height: 1.1;
+  }
+  .cs-section h2 em { font-style: italic; color: var(--fuchsia); }
+  .cs-section p {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    font-weight: 300; line-height: 1.8; color: #5a3a50; margin-bottom: 20px;
+  }
+
+  /* CALLOUT */
+  .cs-callout {
+    background: var(--cream-dark); border-left: 3px solid var(--fuchsia);
+    padding: 28px 32px; margin: 40px 0;
+  }
+  .cs-callout p {
+    font-family: 'Playfair Display', serif; font-size: 22px;
+    font-weight: 400; font-style: italic; color: var(--plum);
+    line-height: 1.5; margin: 0;
+  }
+
+  /* DELIVERABLE CARDS */
+  .cs-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin: 40px 0; }
+  .cs-card {
+    background: var(--cream-dark); border: 1px solid var(--border);
+    padding: 28px 24px;
+  }
+  .cs-card.dark { background: var(--plum); border-color: var(--plum); }
+  .cs-card-num {
+    font-family: 'Playfair Display', serif; font-size: 40px;
+    font-weight: 900; font-style: italic; color: var(--border-dark);
+    line-height: 1; margin-bottom: 12px;
+  }
+  .cs-card.dark .cs-card-num { color: rgba(244,180,220,0.3); }
+  .cs-card h3 {
+    font-family: 'Playfair Display', serif; font-size: 16px;
+    font-weight: 700; color: var(--ink); margin-bottom: 8px; line-height: 1.2;
+  }
+  .cs-card.dark h3 { color: var(--cream); }
+  .cs-card p {
+    font-family: 'Fraunces', serif; font-size: 14px;
+    font-weight: 300; color: var(--warm-gray); line-height: 1.6; margin: 0;
+  }
+  .cs-card.dark p { color: rgba(240,214,228,0.65); }
+
+  /* OUTCOME LIST */
+  .cs-outcomes { list-style: none; margin: 24px 0; }
+  .cs-outcomes li {
+    font-family: 'Fraunces', serif; font-size: 18px;
+    font-weight: 300; color: #5a3a50; line-height: 1.6;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .cs-outcomes li::before {
+    content: '↗'; color: var(--fuchsia); font-size: 14px;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  /* NEXT PROJECT */
+  .cs-next {
+    background: var(--plum); padding: 80px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cs-next-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,214,228,0.5); margin-bottom: 12px; }
+  .cs-next h3 {
+    font-family: 'Playfair Display', serif; font-size: 32px;
+    font-weight: 900; color: var(--cream); letter-spacing: -0.02em;
+  }
+  .cs-next h3 em { font-style: italic; color: var(--fuchsia-bright); }
+  .cs-next-arrow {
+    font-size: 48px; color: var(--fuchsia-bright); text-decoration: none;
+    transition: transform 0.3s;
+  }
+  .cs-next-arrow:hover { transform: translateX(8px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--ink); padding: 28px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(240,214,228,0.35);
+  }
+  footer a { color: rgba(240,214,228,0.35); text-decoration: none; }
+  footer a:hover { color: rgba(240,214,228,0.7); }
+
+  /* FADE */
+  /* Screenshot sections */
+  .cs-screenshot-full { background: var(--ink); padding: 64px 48px; margin: 80px -48px; }
+  .cs-screenshot-full-inner { max-width: 1000px; margin: 0 auto; }
+  .cs-screenshot-full-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(240,214,228,0.4); margin-bottom: 16px; }
+  .cs-screenshot-full-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--cream); margin-bottom: 32px; letter-spacing: -0.02em; }
+  .cs-screenshot-full-title em { font-style: italic; color: var(--fuchsia-bright); }
+  .cs-screenshot-full img { width: 100%; display: block; border: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; }
+  .cs-screenshot-caption { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 300; color: rgba(240,214,228,0.5); font-style: italic; margin-bottom: 40px; line-height: 1.5; }
+
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .cs-hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 40px; }
+    .cs-body { padding: 60px 24px; }
+    .cs-cards { grid-template-columns: 1fr; }
+    .cs-stat-bar { flex-wrap: wrap; gap: 40px; padding: 40px 24px; }
+    .cs-next { flex-direction: column; gap: 32px; padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">BW</a>
+  <a href="index.html#work" class="nav-back">All work</a>
+</nav>
+
+<div class="cs-hero fade-up">
+  <div class="cs-hero-left">
+    <p class="cs-eyebrow">Walmart · AI Strategy</p>
+    <h1>AI content guidelines<br>& <em>guardrails</em></h1>
+  </div>
+  <div class="cs-hero-meta">
+    <p class="cs-hero-summary">Before Walmart shipped inconsistent, untrusted AI-generated content at scale, I built the framework that defined how AI should speak — and when it shouldn't.</p>
+    <div class="cs-meta-row">
+      <div class="cs-meta-item">
+        <span class="cs-meta-label">Company</span>
+        <span class="cs-meta-value">Walmart</span>
+      </div>
+      <div class="cs-meta-item">
+        <span class="cs-meta-label">Role</span>
+        <span class="cs-meta-value">Senior Manager, Content Design</span>
+      </div>
+      <div class="cs-meta-item">
+        <span class="cs-meta-label">Type</span>
+        <span class="cs-meta-value">AI Content Strategy</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cs-divider"></div>
+
+<div class="cs-stat-bar">
+  <div class="cs-stat">
+    <div class="cs-stat-num">Org-wide</div>
+    <div class="cs-stat-label">Standards adopted across all AI products</div>
+  </div>
+  <div class="cs-stat">
+    <div class="cs-stat-num">3</div>
+    <div class="cs-stat-label">Core framework deliverables</div>
+  </div>
+  <div class="cs-stat">
+    <div class="cs-stat-num">F1</div>
+    <div class="cs-stat-label">Fortune 1 scale</div>
+  </div>
+</div>
+
+<div class="cs-body">
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">The problem</div>
+    <h2>AI was shipping.<br><em>Standards weren't.</em></h2>
+    <p>As Walmart moved AI-powered features from experiments to production, a critical gap emerged: there were no standards for how AI should communicate. Customer-facing AI, associate-facing AI and partner-facing AI were all making independent decisions about voice, tone, persona and behavior — with no shared framework to ensure consistency or trust.</p>
+    <p>The risk wasn't just inconsistency. It was trust. When AI speaks in too many voices, or says things a brand would never say, customers notice. At Walmart's scale — serving millions of customers and hundreds of thousands of associates — that inconsistency compounds fast.</p>
+    <div class="cs-callout">
+      <p>"Does this AI need a personality — and if so, what should it sound like?"</p>
+    </div>
+    <p>The risk wasn't just inconsistency. It was trust. When AI speaks in too many voices, or says things a brand would never say, customers notice. At Walmart's scale — serving millions of customers and hundreds of thousands of associates — that inconsistency compounds fast.</p>
+    <div class="cs-callout">
+      <p>"Does this AI need a personality — and if so, what should it sound like?"</p>
+    </div>
+    <p>That was the question no one had answered. I stepped in to answer it before it became a problem in production.</p>
+  </div>
+
+  <div class="cs-screenshot-full fade-up">
+    <div class="cs-screenshot-full-inner">
+      <div class="cs-screenshot-full-label">The problem — from the framework deck</div>
+      <div class="cs-screenshot-full-title">Three AI products. <em>Three different voices.</em></div>
+      <img src="walmart-ai-challenge.png" alt="Slide showing three inconsistent Walmart AI products: Wally, Sidekick, and Sparky">
+      <p class="cs-screenshot-caption">Wally (associate tool), Sidekick (store operations), and Sparky (customer-facing) — all speaking differently, with no shared framework. This slide from the Content & Conversation Design for AI deck was the starting point.</p>
+      <div class="cs-screenshot-full-label">The framework — voice principles</div>
+      <div class="cs-screenshot-full-title">Trustworthy. Clear. Human. <em>Captivating.</em></div>
+      <img src="walmart-ai-voice.png" alt="Voice across AI slide showing five principles: Trustworthy, Value driven, Clear, Human, Captivating">
+      <p class="cs-screenshot-caption">The five voice principles established for all AI products at Walmart — designed to apply whether a human writes the content or AI generates it.</p>
+      <div class="cs-screenshot-full-label">The framework — decision model</div>
+      <div class="cs-screenshot-full-title">Content Design's <em>Big 3</em></div>
+      <img src="walmart-ai-big3.png" alt="Content Design's Big 3 slide — three questions to ask at the beginning of every AI project">
+      <p class="cs-screenshot-caption">Three questions every product team must answer before building: What is the goal? Who is the audience? Does my AI need a personality? This became the entry point to the framework for any new AI project.</p>
+    </div>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">The approach</div>
+    <h2>Three deliverables.<br><em>One framework.</em></h2>
+    <p>I built a comprehensive AI content framework from the ground up — designed to work across every AI product in Walmart's ecosystem, from generative customer service to associate-facing tools to partner and supplier-facing AI.</p>
+
+    <div class="cs-cards">
+      <div class="cs-card dark">
+        <div class="cs-card-num">01</div>
+        <h3>AI Design Decision Deck</h3>
+        <p>A Figma-based reference guiding product teams on whether AI should speak in a given context, and if so, how. Addressed persona, formality, proactivity and error states.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">02</div>
+        <h3>AI Product Taxonomy</h3>
+        <p>A complete map of every AI product in production, categorized by audience, interaction pattern and voice requirements — giving teams a shared language to talk about AI content.</p>
+      </div>
+      <div class="cs-card">
+        <div class="cs-card-num">03</div>
+        <h3>AI Writing Guidelines</h3>
+        <p>Training-ready guidelines for writing in Walmart's voice — designed to work whether a human writes the content or AI generates it. Covered tone, boundaries and error handling.</p>
+      </div>
+    </div>
+
+    <p>The framework was built to be usable without me in the room — detailed enough that any product team could apply it independently, but principled enough that it would hold up as AI capabilities evolved.</p>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">The challenge</div>
+    <h2>When AI speaks,<br><em>whose voice is it?</em></h2>
+    <p>One of the most contested questions in the framework was around AI persona. Some teams wanted their AI to feel distinctly branded — a named character with a defined personality. Others wanted it invisible, just helpful. Both positions had merit.</p>
+    <p>The framework didn't mandate one answer. Instead, it gave teams a decision model: a set of criteria for when a distinct AI persona adds value versus when it creates distance or distrust. That kind of nuance — acknowledging that the right answer depends on context — is what makes a framework durable.</p>
+    <p>The guardrails section was equally important. It defined what AI should never say, how it should handle uncertainty, when to escalate to a human and how to communicate limitations without eroding user confidence.</p>
+  </div>
+
+  <div class="cs-section fade-up">
+    <div class="cs-section-label">Outcomes</div>
+    <h2>Standards that<br><em>scale without you.</em></h2>
+    <ul class="cs-outcomes">
+      <li>AI content standards adopted org-wide across customer, associate and partner-facing products</li>
+      <li>Reduced voice and tone inconsistency across AI touchpoints before it compounded at scale</li>
+      <li>Product teams equipped to make AI content decisions independently, without case-by-case escalation</li>
+      <li>Framework designed to remain relevant as AI capabilities and product scope evolve</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="cs-next">
+  <div>
+    <div class="cs-next-label">Next case study</div>
+    <h3>Leading through <em>enterprise reorg</em></h3>
+  </div>
+  <a href="walmart-reorg.html" class="cs-next-arrow">→</a>
+</div>
+
+<footer>
+  <span>© 2026 Bridgett Weaver</span>
+  <a href="index.html">← Back to portfolio</a>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
+
     --cream-dark: #F0E6DC;
     --ink:        #1C0A1A;
     --plum:       #4C0043;
