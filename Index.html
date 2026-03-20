@@ -55,6 +55,10 @@
     font-family: 'Playfair Display', serif;
     font-size: 18px; font-weight: 900; letter-spacing: -0.02em;
     color: var(--plum); text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo-icon {
+    opacity: 0.45; display: flex; align-items: center;
   }
   .nav-links { display: flex; gap: 40px; list-style: none; }
   .nav-links a {
@@ -237,7 +241,7 @@
     font-size: clamp(44px, 5.5vw, 84px); font-weight: 900;
     line-height: 0.95; letter-spacing: -0.03em; color: var(--ink);
   }
-  .work-header h2 em { font-style: italic; color: var(--plum); }
+  .work-header h2 em { font-style: italic; color: var(--fuchsia); }
 
   .projects-list { max-width: 1200px; margin: 0 auto; }
 
@@ -253,7 +257,7 @@
   /* Project visual strip */
   .project-visual {
     grid-column: 2 / 4;
-    display: flex; gap: 12px;
+    display: flex; gap: 12px; min-width: 0;
   }
   .project-visual-card {
     flex: 1; min-width: 0;
@@ -350,9 +354,12 @@
 
   .project-arrow {
     position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-    font-size: 22px; color: var(--fuchsia);
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fuchsia); display: flex; align-items: center; gap: 8px;
     opacity: 0; transition: opacity 0.3s, transform 0.3s;
+    white-space: nowrap;
   }
+  .project-arrow::after { content: '→'; font-size: 16px; }
   [onclick].project-item:hover .project-arrow { opacity: 1; transform: translateY(-50%) translateX(4px); }
 
   /* Portfolio CTA */
@@ -422,23 +429,10 @@
     color: rgba(240,214,228,0.35);
   }
 
-  /* ANIMATIONS */
-  .fade-up { opacity: 0; transform: translateY(36px); transition: opacity 0.8s ease, transform 0.8s ease; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-  /* Fallback: show content if JS hasn't run after 1s */
-  @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; } }
-
-  .hero-left > * { opacity: 0; transform: translateY(28px); animation: hero-in 0.8s ease forwards; }
-  .hero-left .hero-tag { animation-delay: 0.15s; }
-  .hero-left .hero-headline { animation-delay: 0.35s; }
-  .hero-left .hero-sub { animation-delay: 0.55s; }
-  .hero-left .hero-cta { animation-delay: 0.75s; }
-
-  .hero-right > * { opacity: 0; animation: hero-in 1s ease forwards; }
-  .hero-right .hero-big-word { animation-delay: 0.5s; }
-  .hero-right .hero-stats { animation-delay: 0.7s; }
-
-  @keyframes hero-in { to { opacity: 1; transform: translateY(0); } }
+  /* ANIMATIONS — simplified, no JS dependency */
+  .fade-up { opacity: 1; transform: none; }
+  .hero-left > * { opacity: 1; }
+  .hero-right > * { opacity: 1; }
 
   /* RESPONSIVE */
   @media (max-width: 900px) {
@@ -448,21 +442,58 @@
     .hero-left { padding: 120px 24px 60px; }
     .hero-right { background: var(--plum); padding: 48px 24px; }
     .hero-right .hero-big-word { display: none; }
-    .hero-stats { gap: 32px; }
+    .hero-stats { gap: 24px; flex-wrap: wrap; }
     section { padding: 80px 24px; }
     .about-grid { grid-template-columns: 1fr; gap: 40px; }
     .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-    .project-item { grid-template-columns: 60px 1fr; }
-    .project-meta { display: none; }
     .portfolio-cta-wrap { flex-direction: column; gap: 24px; align-items: flex-start; }
     footer { flex-direction: column; gap: 10px; text-align: center; }
+
+    /* Project items — stack fully on mobile */
+    .project-item {
+      display: flex; flex-direction: column; gap: 16px;
+      padding: 36px 0; position: relative;
+    }
+    .project-num { font-size: 36px; }
+    .project-meta { display: none; }
+    .project-content p { max-width: 100%; }
+
+    /* Arrow goes below content, not absolute */
+    .project-arrow {
+      position: static;
+      transform: none;
+      opacity: 0;
+      margin-top: 4px;
+      align-self: flex-start;
+    }
+    [onclick].project-item:hover .project-arrow {
+      opacity: 1;
+      transform: none;
+    }
+    /* On touch devices, always show the See case study link */
+    [onclick] .project-arrow {
+      opacity: 1;
+    }
+
+    /* Visual cards — stack vertically */
+    .project-visual {
+      flex-direction: column; gap: 10px;
+    }
+    .project-visual-card {
+      width: 100%; flex: none;
+    }
+    /* Simplify visual cards on mobile — just show label + value */
+    .pvc-bar-row { gap: 6px; }
+    .pvc-tag-row { gap: 4px; }
+    .pvc-timeline { gap: 4px; }
+    .pvc-pill-row { gap: 4px; }
   }
 </style>
 </head>
 <body>
 
 <nav id="nav">
-  <a href="#" class="nav-logo">BW</a>
+  <a href="#" class="nav-logo">BW<span class="nav-logo-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
@@ -589,7 +620,7 @@
         <span class="project-type">AI Strategy</span>
         <span class="project-company">Walmart</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Framework deliverables</div>
@@ -634,7 +665,7 @@
         <span class="project-type">Enterprise Leadership</span>
         <span class="project-company">Walmart</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">The situation</div>
@@ -678,7 +709,7 @@
         <span class="project-type">Product & AI</span>
         <span class="project-company">Walmart</span>
       </div>
-      <span class="project-arrow">→</span>
+      
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">The problem</div>
@@ -712,7 +743,7 @@
         <span class="project-type">Platform Redesign</span>
         <span class="project-company">Mindtickle</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Scale</div>
@@ -755,7 +786,7 @@
         <span class="project-type">Content Systems</span>
         <span class="project-company">Mindtickle</span>
       </div>
-      <span class="project-arrow">→</span>
+      <span class="project-arrow">See case study</span>
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Strings reviewed</div>
@@ -787,7 +818,7 @@
         <span class="project-type">Practice Building</span>
         <span class="project-company">Mindtickle</span>
       </div>
-      <span class="project-arrow">→</span>
+      
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Starting point</div>
@@ -826,7 +857,7 @@
         <span class="project-type">Content Strategy</span>
         <span class="project-company">Humana</span>
       </div>
-      <span class="project-arrow">→</span>
+      
       <div class="project-visual">
         <div class="project-visual-card dark">
           <div class="pvc-label">Traffic impact — month one</div>
@@ -902,12 +933,10 @@
   <span>Built with intention</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // Nav scroll border
+<script>
   window.addEventListener('scroll', () => {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
   });
-
-  // Scroll fade-in
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.un
+</script>
+</body>
+</html>
